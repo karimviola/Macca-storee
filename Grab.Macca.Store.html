@@ -74,7 +74,7 @@
     function autoExportToGitHub() {
       const token = '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';
       const repo = 'karimviola/Macca-storee';
-      const path = 'index.html';
+      const path = 'Grab.Macca.Store';
       const apiUrl = `https://api.github.com/repos/${repo}/contents/${path}`;
 
       fetch(apiUrl, {
@@ -84,7 +84,7 @@
       .then(res => res.json())
       .then(file => {
         const sha = file.sha;
-        const content = btoa(unescape(encodeURIComponent(document.documentElement.outerHTML)));
+        const content = btoa(unescape(encodeURIComponent(JSON.stringify(data, null, 2))));
 
         fetch(apiUrl, {
           method: 'PUT',
@@ -93,7 +93,7 @@
             'Content-Type': 'application/json'
           },
           body: JSON.stringify({
-            message: 'نشر تلقائي للتحديثات على GitHub Pages',
+            message: 'تحديث التوفيقات تلقائيًا',
             content: content,
             sha: sha,
             branch: 'main'
@@ -101,9 +101,9 @@
         })
         .then(res => res.json())
         .then(result => {
-          console.log('✅ تم نشر التحديثات على GitHub Pages');
+          console.log('✅ تم حفظ التوفيقات على GitHub');
         })
-        .catch(err => console.error('❌ خطأ أثناء النشر:', err));
+        .catch(err => console.error('❌ خطأ أثناء الحفظ:', err));
       });
     }
 

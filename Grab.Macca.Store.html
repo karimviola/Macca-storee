@@ -72,9 +72,9 @@
     }
 
     function autoExportToGitHub() {
-      const token = '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'; // ضع التوكن هنا
-      const repo = 'karimviola/case-compatibility-tools';
-      const path = 'case-compatibility-data.json';
+      const token = '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';
+      const repo = 'karimviola/Macca-storee';
+      const path = 'index.html';
       const apiUrl = `https://api.github.com/repos/${repo}/contents/${path}`;
 
       fetch(apiUrl, {
@@ -84,7 +84,7 @@
       .then(res => res.json())
       .then(file => {
         const sha = file.sha;
-        const content = btoa(unescape(encodeURIComponent(JSON.stringify(data, null, 2))));
+        const content = btoa(unescape(encodeURIComponent(document.documentElement.outerHTML)));
 
         fetch(apiUrl, {
           method: 'PUT',
@@ -93,7 +93,7 @@
             'Content-Type': 'application/json'
           },
           body: JSON.stringify({
-            message: 'تحديث توفيقات تلقائي من الموقع',
+            message: 'نشر تلقائي للتحديثات على GitHub Pages',
             content: content,
             sha: sha,
             branch: 'main'
@@ -101,9 +101,9 @@
         })
         .then(res => res.json())
         .then(result => {
-          console.log('✅ تم رفع البيانات إلى GitHub بنجاح');
+          console.log('✅ تم نشر التحديثات على GitHub Pages');
         })
-        .catch(err => console.error('❌ خطأ أثناء الرفع إلى GitHub:', err));
+        .catch(err => console.error('❌ خطأ أثناء النشر:', err));
       });
     }
 
@@ -166,7 +166,7 @@
     }
 
     function downloadJSON() {
-      const filename = "case-compatibility-data.json";
+      const filename = "Grab.Macca.Store";
       const jsonStr = JSON.stringify(data, null, 2);
       const blob = new Blob([jsonStr], { type: "application/json" });
       const url = URL.createObjectURL(blob);
@@ -202,22 +202,22 @@
     }
 
     loadFromLocalStorage();
-fetchLatestFromGitHub();
+    fetchLatestFromGitHub();
     renderTable(data);
-  
-function fetchLatestFromGitHub() {
-  const apiUrl = 'https://raw.githubusercontent.com/karimviola/case-compatibility-tools/main/case-compatibility-data.json';
-  fetch(apiUrl)
-    .then(response => response.json())
-    .then(remoteData => {
-      if (Array.isArray(remoteData)) {
-        data = remoteData;
-        saveToLocalStorage();
-        renderTable(data);
-      }
-    })
-    .catch(err => console.error('فشل تحميل البيانات من GitHub:', err));
-}
-</script>
+
+    function fetchLatestFromGitHub() {
+      const apiUrl = 'https://raw.githubusercontent.com/karimviola/Macca-storee/main/Grab.Macca.Store';
+      fetch(apiUrl)
+        .then(response => response.json())
+        .then(remoteData => {
+          if (Array.isArray(remoteData)) {
+            data = remoteData;
+            saveToLocalStorage();
+            renderTable(data);
+          }
+        })
+        .catch(err => console.error('فشل تحميل البيانات من GitHub:', err));
+    }
+  </script>
 </body>
 </html>
